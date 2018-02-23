@@ -1,0 +1,19 @@
+{
+    "name": "lwc/clientcompat",
+    "autoload": {
+        "psr-4": {
+            "Twirp\\Clientcompat\\": "Twirp/Clientcompat",
+            "GPBMetadata\\": "GPBMetadata"
+        }
+    },
+    "authors": [
+        {
+            "name": "Luke Cawood",
+            "email": "luke.cawood@99designs.com"
+        }
+    ],
+    "require": {
+        "google/protobuf": "v3.5.1.1",
+        "guzzlehttp/guzzle": "^6.3"
+    }
+}
