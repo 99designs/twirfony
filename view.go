@@ -34,6 +34,10 @@ func (s *serviceView) InterfaceName() string {
 	return s.GetName() + "Interface"
 }
 
+func (s *serviceView) StubName() string {
+	return s.GetName() + "Stub"
+}
+
 func (s *serviceView) ExceptionName() string {
 	return s.GetName() + "Exception"
 }
@@ -70,6 +74,10 @@ func (m *methodView) RPCMethodName() string {
 
 func (m *methodView) PHPMethodName() string {
 	return fixPHPKeywords(lowerFirst(m.GetName()))
+}
+
+func (m *methodView) PHPCallbackName() string {
+	return "$on" + fixPHPKeywords(m.GetName())
 }
 
 func (m *methodView) InputType() string {

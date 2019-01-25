@@ -32,9 +32,22 @@ class Hat extends \Google\Protobuf\Internal\Message
      */
     private $name = '';
 
-    public function __construct() {
+    /**
+     * Constructor.
+     *
+     * @param array $data {
+     *     Optional. Data for populating the Message object.
+     *
+     *     @type int $inches
+     *     @type string $color
+     *           anything but "invisible"
+     *     @type string $name
+     *           i.e. "bowler"
+     * }
+     */
+    public function __construct($data = NULL) {
         \GPBMetadata\Haberdasher::initOnce();
-        parent::__construct();
+        parent::__construct($data);
     }
 
     /**

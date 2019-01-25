@@ -22,9 +22,19 @@ class Size extends \Google\Protobuf\Internal\Message
      */
     private $inches = 0;
 
-    public function __construct() {
+    /**
+     * Constructor.
+     *
+     * @param array $data {
+     *     Optional. Data for populating the Message object.
+     *
+     *     @type int $inches
+     *           must be > 0
+     * }
+     */
+    public function __construct($data = NULL) {
         \GPBMetadata\Haberdasher::initOnce();
-        parent::__construct();
+        parent::__construct($data);
     }
 
     /**

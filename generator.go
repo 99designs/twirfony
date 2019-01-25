@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"strings"
+	"text/template"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/golang/protobuf/protoc-gen-go/descriptor"
@@ -20,53 +21,25 @@ func (g *generator) Generate(req *plugin.CodeGeneratorRequest) *plugin.CodeGener
 
 		for _, service := range file.Service {
 			presenter := &serviceView{service, file}
-
-			resp.File = append(resp.File, g.generateInterface(presenter))
-			resp.File = append(resp.File, g.generateException(presenter))
-			resp.File = append(resp.File, g.generateClient(presenter))
+			resp.File = append(resp.File, generateFile(presenter, interfaceTemplate, presenter.InterfaceName()))
+			resp.File = append(resp.File, generateFile(presenter, exceptionTemplate, presenter.ExceptionName()))
+			resp.File = append(resp.File, generateFile(presenter, clientTemplate, presenter.ClassName()))
+			resp.File = append(resp.File, generateFile(presenter, stubTemplate, presenter.StubName()))
 		}
 	}
 	return resp
 }
 
-func (g *generator) generateInterface(presenter *serviceView) *plugin.CodeGeneratorResponse_File {
+func generateFile(presenter *serviceView, t *template.Template, name string) *plugin.CodeGeneratorResponse_File {
 
 	buffer := &bytes.Buffer{}
-	err := interfaceTemplate.Execute(buffer, presenter)
+	err := t.Execute(buffer, presenter)
 	if err != nil {
 		panic(err)
 	}
 
 	resp := &plugin.CodeGeneratorResponse_File{}
-	resp.Name = proto.String(getFileName(presenter.Namespace(), presenter.InterfaceName()))
-	resp.Content = proto.String(buffer.String())
-	return resp
-}
-
-func (g *generator) generateClient(presenter *serviceView) *plugin.CodeGeneratorResponse_File {
-
-	buffer := &bytes.Buffer{}
-	err := clientTemplate.Execute(buffer, presenter)
-	if err != nil {
-		panic(err)
-	}
-
-	resp := &plugin.CodeGeneratorResponse_File{}
-	resp.Name = proto.String(getFileName(presenter.Namespace(), presenter.ClassName()))
-	resp.Content = proto.String(buffer.String())
-	return resp
-}
-
-func (g *generator) generateException(presenter *serviceView) *plugin.CodeGeneratorResponse_File {
-
-	buffer := &bytes.Buffer{}
-	err := exceptionTemplate.Execute(buffer, presenter)
-	if err != nil {
-		panic(err)
-	}
-
-	resp := &plugin.CodeGeneratorResponse_File{}
-	resp.Name = proto.String(getFileName(presenter.Namespace(), presenter.ExceptionName()))
+	resp.Name = proto.String(getFileName(presenter.Namespace(), name))
 	resp.Content = proto.String(buffer.String())
 	return resp
 }
