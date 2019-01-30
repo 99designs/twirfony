@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package ninedesigns;
+
+option go_package = "99designspb";
+option java_multiple_files = true;
+option java_outer_classname = "TurtlesProto";
+option java_package = "com.99designs";

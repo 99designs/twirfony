@@ -1,2 +1,5 @@
 examples/clientcompat/vendor/
 protoc-gen-twirp_php/examples/clientcompat/vendor/
+php/vendor
+example/var
+
