@@ -4,8 +4,6 @@
 
 namespace Twirp\Example\Haberdasher;
 
-use Google\Protobuf\Internal\Message;
-
 class HaberdasherStub implements HaberdasherInterface
 {
 
@@ -13,8 +11,9 @@ class HaberdasherStub implements HaberdasherInterface
 
     public function makeHat(Size $size): Hat
     {
-        if ($this->$onMakeHat) {
-            return $this->$onMakeHat($size);
+        if ($this->onMakeHat) {
+            $func = $this->onMakeHat;
+            return $func($size);
         }
         throw new \BadMethodCallException("Method not stubbed");
     }

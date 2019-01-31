@@ -25,6 +25,7 @@ func (g *generator) Generate(req *plugin.CodeGeneratorRequest) *plugin.CodeGener
 			resp.File = append(resp.File, generateFile(presenter, exceptionTemplate, presenter.ExceptionName()))
 			resp.File = append(resp.File, generateFile(presenter, clientTemplate, presenter.ClassName()))
 			resp.File = append(resp.File, generateFile(presenter, stubTemplate, presenter.StubName()))
+			resp.File = append(resp.File, generateFile(presenter, noopTemplate, presenter.NoopName()))
 		}
 	}
 	return resp
