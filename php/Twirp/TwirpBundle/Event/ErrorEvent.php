@@ -16,7 +16,7 @@ class ErrorEvent extends Event
     private $input;
     private $exception;
 
-    public function __construct(Request $request, $serviceId, $method, Message $input, \Exception $exception)
+    public function __construct(Request $request, $serviceId, $method, Message $input = null, \Exception $exception = null)
     {
         $this->request = $request;
         $this->serviceId = $serviceId;

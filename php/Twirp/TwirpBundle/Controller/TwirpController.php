@@ -104,7 +104,7 @@ class TwirpController extends Controller
     {
         $types = ['application/json' => true, 'application/protobuf' => false];
         foreach ($types as $mime => $useJson) {
-            if (substr($request->getContentType(), 0, strlen($mime)) === $mime) {
+            if (substr($request->headers->get('CONTENT_TYPE'), 0, strlen($mime)) === $mime) {
                 return $useJson;
             }
         }
