@@ -1,8 +1,0 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
-
-twirp_api:
-    resource: 'twirp.service_registry:loadRoutes'
-    type: service
-    prefix: /twirp

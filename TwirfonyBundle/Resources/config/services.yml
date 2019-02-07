@@ -1,0 +1,5 @@
+services:
+
+  twirp.service_registry:
+    class: Twirfony\TwirfonyBundle\DependencyInjection\Twirp\ServiceRegistry
+    public: true

@@ -12,20 +12,8 @@
         <server name="KERNEL_CLASS" value="AppKernel" />
     </php>
 
-    <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
-        </testsuite>
-    </testsuites>
+    <testsuite name='Twirfony'>
+        <directory suffix='Test.php'>./example</directory>
+    </testsuite>
 
-    <filter>
-        <whitelist>
-            <directory>src</directory>
-            <exclude>
-                <directory>src/*Bundle/Resources</directory>
-                <directory>src/*/*Bundle/Resources</directory>
-                <directory>src/*/Bundle/*Bundle/Resources</directory>
-            </exclude>
-        </whitelist>
-    </filter>
 </phpunit>
