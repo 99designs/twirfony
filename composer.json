@@ -1,0 +1,34 @@
+{
+    "name": "99designs/twirfony",
+    "license": "MIT",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Twirfony\\": ""
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "": "example/Haberdasher/src"
+        },
+        "files": [
+            "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"
+        ],
+        "classmap": [
+            "example/Haberdasher/app/AppKernel.php",
+            "example/Haberdasher/app/AppCache.php"
+        ]
+    },
+    "require": {
+        "php": ">=7.0.0",
+        "ext-json": "^1.6",
+        "symfony/symfony": "3.4.*",
+        "google/protobuf": "v3.5.1.1",
+        "psr/http-message": "^1.0",
+        "guzzlehttp/guzzle": "^6"
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^3.0",
+        "phpunit/phpunit": "^7"
+    }
+}
