@@ -119,7 +119,7 @@ class TwirpError extends \Exception
         return new self(self::INTERNAL, $message);
     }
 
-    public static function internalErrorWith(\Exception $exception)
+    public static function internalErrorWith(\Throwable $exception)
     {
         $err = new self(self::INTERNAL, $exception->getMessage(), $exception);
         $err->addMeta('cause', get_class($exception));

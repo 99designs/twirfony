@@ -16,7 +16,7 @@ class ErrorEvent extends Event
     private $input;
     private $exception;
 
-    public function __construct(Request $request, $serviceId, $method, Message $input = null, \Exception $exception = null)
+    public function __construct(Request $request, $serviceId, $method, Message $input = null, \Throwable $exception = null)
     {
         $this->request = $request;
         $this->serviceId = $serviceId;
@@ -45,7 +45,7 @@ class ErrorEvent extends Event
         return $this->input;
     }
 
-    public function getException(): \Exception
+    public function getException(): \Throwable
     {
         return $this->exception;
     }
