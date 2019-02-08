@@ -38,6 +38,10 @@ func (s *serviceView) StubName() string {
 	return s.GetName() + "Stub"
 }
 
+func (s *serviceView) NoopName() string {
+	return s.GetName() + "Noop"
+}
+
 func (s *serviceView) ExceptionName() string {
 	return s.GetName() + "Exception"
 }
@@ -77,7 +81,7 @@ func (m *methodView) PHPMethodName() string {
 }
 
 func (m *methodView) PHPCallbackName() string {
-	return "$on" + fixPHPKeywords(m.GetName())
+	return "on" + fixPHPKeywords(m.GetName())
 }
 
 func (m *methodView) InputType() string {
