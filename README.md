@@ -37,8 +37,16 @@ class AppKernel extends Kernel
     }
 ```
 
+3. Register the router in routing.yml
 
-3. Create implement your twirp service
+```yaml
+twirp_api:
+    resource: 'twirp.service_registry:loadRoutes'
+    type: service
+    prefix: /twirp
+```
+
+4. Create implement your twirp service
 ```php
 namespace AppBundle\Service;
 
@@ -59,7 +67,7 @@ class HaberdasherService implements TwirpService, HaberdasherInterface
 }
 ```
 
-4. Register and tag your service
+5. Register and tag your service
 ```yaml
     haberdasher_service:
         class: AppBundle\Service\HaberdasherService
