@@ -91,6 +91,10 @@ class TwirpError extends \Exception
     // DataLoss indicates unrecoverable data loss or corruption.
     const DATA_LOSS = "data_loss";
 
+    // Gone indicates the target resource is no longer available and that this
+    // condition is likely to be permanent.
+    const GONE = "gone";
+
     private static $statusCodeMap = [
         self::CANCELED => 408, // RequestTimeout
         self::UNKNOWN => 500, // Internal Server Error
@@ -109,6 +113,7 @@ class TwirpError extends \Exception
         self::INTERNAL => 500, // Internal Server Error
         self::UNAVAILABLE => 503, // Service Unavailable
         self::DATA_LOSS => 500, // Internal Server Error
+        self::GONE => 410, // Gone
     ];
 
     private $twirpCode;
