@@ -42,7 +42,7 @@ class {{ .ClassName }} implements {{ .InterfaceName }}
             ]
         ]);
         if ($res->getStatusCode() != 200) {
-            throw new {{ .ExceptionName }}($res);
+            throw {{ .ExceptionName }}::fromResponse($res);
         }
         return $res;
     }
@@ -141,19 +141,12 @@ class {{ .ExceptionName }} extends \Exception
     private $twirpCode;
     private $meta;
 
-    public function __construct(ResponseInterface $response)
+    public function __construct($msg, $httpCode, $twirpCode = 'internal', $meta = [])
     {
-        $data = @json_decode($response->getBody()->getContents(), true);
+        parent::__construct($msg, $httpCode);
 
-        if (isset($data['msg'])) {
-            $msg = $data['msg'];
-        } else {
-            $msg = $response->getStatusCode() . ': Unknown server response: ' . $response->getBody()->getContents();
-        }
-
-        $this->twirpCode = isset($data['code']) ? $data['code'] : 'internal';
-        $this->meta = isset($data['meta']) ? $data['meta']: [];
-        parent::__construct($msg, $response->getStatusCode());
+        $this->twirpCode = $twirpCode;
+        $this->meta = $meta;
     }
 
     public function getTwirpCode(): string
@@ -164,6 +157,23 @@ class {{ .ExceptionName }} extends \Exception
     public function getMeta(): array
     {
         return $this->meta;
+    }
+
+    public static function fromResponse(ResponseInterface $response) {
+        $data = @json_decode($response->getBody()->getContents(), true);
+
+        if (isset($data['msg'])) {
+            $msg = $data['msg'];
+        } else {
+            $msg = $response->getStatusCode() . ': Unknown server response: ' . $response->getBody()->getContents();
+        }
+
+        return new self(
+            $msg,
+            $response->getStatusCode(),
+            isset($data['code']) ? $data['code'] : 'internal',
+            isset($data['meta']) ? $data['meta']: []
+        );
     }
 }
 `))
