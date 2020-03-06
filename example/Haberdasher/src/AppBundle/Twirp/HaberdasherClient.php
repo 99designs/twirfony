@@ -38,7 +38,7 @@ class HaberdasherClient implements HaberdasherInterface
             ]
         ]);
         if ($res->getStatusCode() != 200) {
-            throw new HaberdasherException($res);
+            throw HaberdasherException::fromResponse($res);
         }
         return $res;
     }
