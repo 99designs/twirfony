@@ -13,10 +13,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Set up PHP 7.3
+    - name: Set up PHP 7.4
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '7.3'
+        php-version: '7.4'
 
     - name: Set up Go 1.16
       uses: actions/setup-go@v1
@@ -47,3 +47,4 @@ jobs:
 
     - name: Run test suite (Symfony 3)
       run: ./vendor/bin/phpunit
+
