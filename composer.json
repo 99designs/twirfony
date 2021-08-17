@@ -21,7 +21,7 @@
     },
     "require": {
         "php": "^7",
-        "ext-json": "^1",
+        "ext-json": "*",
         "symfony/symfony": "~3|~4",
         "google/protobuf": "^3",
         "psr/http-message": "^1",
