@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "google/protobuf": "v3.5.1.1",
+        "google/protobuf": "v3.15.0",
         "guzzlehttp/guzzle": "^6.3"
     }
 }
