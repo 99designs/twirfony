@@ -1,5 +1,11 @@
 services:
-
   twirp.service_registry:
     class: Twirfony\TwirfonyBundle\DependencyInjection\Twirp\ServiceRegistry
     public: true
+    tags: [routing.route_loader]
+
+  Twirfony\TwirfonyBundle\Controller\TwirpController:
+    autoconfigure: true
+    autowire: true
+    calls:
+      - ["setContainer", ["@service_container"]]

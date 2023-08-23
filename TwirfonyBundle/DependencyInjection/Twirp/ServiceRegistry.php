@@ -26,7 +26,7 @@ class ServiceRegistry
                     'inputType' => $method->getInputType(),
                     'service' => $definition->getServiceId(),
                     'method' => $method->getPhpMethod(),
-                    '_controller' => 'TwirfonyBundle:Twirp:rpc'
+                    '_controller' => 'Twirfony\TwirfonyBundle\Controller\TwirpController::rpcAction'
                 ]);
                 $routes->add('twirp_' . $method->getTwirpPath(), $route);
             }

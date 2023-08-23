@@ -1,4 +1,4 @@
 composer.lock
 vendor
 example/Haberdasher/var
-
+.phpunit.result.cache

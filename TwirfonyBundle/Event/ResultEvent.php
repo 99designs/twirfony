@@ -2,9 +2,9 @@
 
 namespace Twirfony\TwirfonyBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\HttpFoundation\Request;
 use Google\Protobuf\Internal\Message;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class ResultEvent extends Event
 {

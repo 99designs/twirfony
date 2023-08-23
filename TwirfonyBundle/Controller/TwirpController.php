@@ -3,23 +3,31 @@
 namespace Twirfony\TwirfonyBundle\Controller;
 
 use Throwable;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Google\Protobuf\Internal\Message;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Twirfony\TwirfonyBundle\Event\ErrorEvent;
 use Twirfony\TwirfonyBundle\Event\RequestEvent;
 use Twirfony\TwirfonyBundle\Event\ResultEvent;
 use Twirfony\TwirpError;
 
-class TwirpController extends Controller
+class TwirpController extends AbstractController implements LoggerAwareInterface
 {
+    private $logger;
+
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
 
     public function rpcAction(Request $request)
     {
         $inputType = $request->attributes->get('inputType');
         $serviceId = $request->attributes->get('service');
-        $service = $this->get($serviceId);
+        $service = $this->container->get($serviceId);
         $method = $request->attributes->get('method');
 
         $input = null;
@@ -34,9 +42,9 @@ class TwirpController extends Controller
                 $input->mergeFromString($request->getContent());
             }
 
-            $this->get('event_dispatcher')->dispatch(RequestEvent::NAME, new RequestEvent($request, $serviceId, $method, $input));
+            $this->container->get('event_dispatcher')->dispatch(new RequestEvent($request, $serviceId, $method, $input), RequestEvent::NAME);
             $output = $service->$method($input);
-            $this->get('event_dispatcher')->dispatch(ResultEvent::NAME, new ResultEvent($request, $serviceId, $method, $input, $output));
+            $this->container->get('event_dispatcher')->dispatch(new ResultEvent($request, $serviceId, $method, $input, $output), ResultEvent::NAME);
 
             $response = new Response();
 
@@ -48,16 +56,14 @@ class TwirpController extends Controller
                 $response->headers->set('Content-Type', 'application/protobuf');
             }
             return $response;
-
         } catch (TwirpError $e) {
-            $this->get('event_dispatcher')->dispatch(ErrorEvent::NAME, new ErrorEvent($request, $serviceId, $method, $input, $e));
+            $this->container->get('event_dispatcher')->dispatch(new ErrorEvent($request, $serviceId, $method, $input, $e), ErrorEvent::NAME);
             return $this->errorResponse($e);
-
         } catch (Throwable $e) {
-            $this->get('logger')->err($e->getMessage(), [
+            $this->logger->error($e->getMessage(), [
                 'exception' => $e
             ]);
-            $this->get('event_dispatcher')->dispatch(ErrorEvent::NAME, new ErrorEvent($request, $serviceId, $method, $input, $e));
+            $this->container->get('event_dispatcher')->dispatch(new ErrorEvent($request, $serviceId, $method, $input, $e), ErrorEvent::NAME);
             return $this->errorResponse(TwirpError::internalErrorWith($e));
         }
     }
