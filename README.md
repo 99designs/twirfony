@@ -41,7 +41,7 @@ class AppKernel extends Kernel
 
 ```yaml
 twirp_api:
-    resource: 'twirp.service_registry:loadRoutes'
+    resource: 'twirp.service_registry::loadRoutes'
     type: service
     prefix: /twirp
 ```

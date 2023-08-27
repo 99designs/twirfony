@@ -39,12 +39,12 @@ jobs:
     - name: Generate protobuf code
       run: ./.github/workflows/protoc.sh
 
+    - name: Run test suite (Symfony 5)
+      run: ./vendor/bin/phpunit
+
+    - name: Install Symfony 4
+      run: composer require --update-with-dependencies symfony/symfony ~4.4
+
     - name: Run test suite (Symfony 4)
-      run: SYMFONY_DEPRECATIONS_HELPER=weak ./vendor/bin/phpunit
-
-    - name: Install Symfony 3
-      run: composer require --update-with-dependencies symfony/symfony ~3.4
-
-    - name: Run test suite (Symfony 3)
       run: ./vendor/bin/phpunit
 

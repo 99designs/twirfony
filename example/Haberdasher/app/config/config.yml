@@ -10,8 +10,9 @@ parameters:
 framework:
     secret: '%secret%'
     router:
-        resource: 'config/routing.yml'
+        resource: "%kernel.project_dir%/example/Haberdasher/app/config/routing.yml"
         strict_requirements: ~
+        utf8: true
     form: ~
     default_locale: '%locale%'
     trusted_hosts: ~
